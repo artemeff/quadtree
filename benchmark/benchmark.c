@@ -17,13 +17,13 @@ void insert_100000_times() {
 }
 
 void ascent(node_t *node) {
-  if (node && node->point && node->point->x) {
+  if (node && node->point) {
     // ok
   }
 }
 
 void descent(node_t *node) {
-  if (node && node->point && node->point->x) {
+  if (node && node->point) {
     // ok
   }
 }

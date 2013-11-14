@@ -36,13 +36,13 @@ void test_bounds() {
 static int asc_size = 0, desc_size = 0;
 
 void ascent(node_t *node) {
-  if (node && node->point && node->point->x) {
+  if (node && node->point) {
     asc_size++;
   }
 }
 
 void descent(node_t *node) {
-  if (node && node->point && node->point->x) {
+  if (node && node->point) {
     desc_size++;
   }
 }
