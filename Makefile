@@ -11,6 +11,10 @@ build/libquadtree.a: $(OBJ)
 	@mkdir -p build
 	@$(AR) rcs $@ $^
 
+install: build/libquadtree.a
+	@cp build/libquadtree.a /usr/local/lib/libquadtree.a
+	@cp src/quadtree.h /usr/local/include/quadtree.h
+
 clean:
 	@rm -fr bin build *.o src/*.o
 
