@@ -30,6 +30,39 @@ void test_bounds() {
   bounds_free(bounds);
 }
 
+/**
+ * walking callbacks
+ */
+static int asc_size = 0, desc_size = 0;
+
+void ascent(node_t *node) {
+  if (node && node->point && node->point->x) {
+    asc_size++;
+  }
+}
+
+void descent(node_t *node) {
+  if (node && node->point && node->point->x) {
+    desc_size++;
+  }
+}
+
+void test_walking() {
+  int i, val = 10;
+  quadtree_t *tree = quadtree_new(0, 0, 100, 100);
+
+  for (i = 1; i < 30; i++) {
+    quadtree_insert(tree, (double) i, (double) i, &val);
+  }
+
+  quadtree_walk(tree->root, &ascent, &descent);
+
+  assert(tree->length == asc_size);
+  assert(tree->length == desc_size);
+
+  quadtree_free(tree);
+}
+
 void test_tree() {
   int val = 10;
 
@@ -57,7 +90,6 @@ void test_tree() {
   assert(quadtree_insert(tree, 3.0, 1.1, &val) == 1);
   assert(tree->length == 3);
   assert(quadtree_search(tree, 3.0, 1.1)->x == 3.0);
-  // quadtree_walk(tree->root, ascent, descent);
   quadtree_free(tree);
 }
 
@@ -76,6 +108,7 @@ int main() {
   case(test_points);
   case(test_node);
   case(test_bounds);
+  case(test_walking);
   case(test_tree);
   case(test_search);
 
