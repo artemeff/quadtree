@@ -2,6 +2,18 @@
 
 ---
 
+### Benchmarks
+
+```
+  [ok] 0.1095 of 0.120000
+       insert_100000_times
+
+  [ok] 0.0096 of 0.010000
+       walking_in_tree_with_100000_points
+```
+
+---
+
 ### Installation
 
 ```bash
