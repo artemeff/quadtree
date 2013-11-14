@@ -35,11 +35,12 @@ void walking_in_tree_with_100000_points() {
 }
 
 int main(){
+  b_desc();
   srand(time(NULL));
   tree = quadtree_new(0, 0, 1000, 1000);
 
-  bench(insert_100000_times, 0.15);
-  bench(walking_in_tree_with_100000_points, 0.015);
+  bench(insert_100000_times, 0.12);
+  bench(walking_in_tree_with_100000_points, 0.01);
 
   quadtree_free(tree);
   return b_isok();

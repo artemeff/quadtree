@@ -12,6 +12,10 @@ static int fail;
 static clock_t start_time;
 static float duration;
 
+void b_desc() {
+  printf("\n\x1b[34m\tbenchmarks\x1b[0m\n\n");
+}
+
 void b_measure(const char *descr, double expect, void (*bm)()) {
   bm();
 
