@@ -26,7 +26,26 @@ $ make install
 
 ### Usage
 
-...
+Hello world:
+
+```c
+#include <stdio.h>
+#include <quadtree.h>
+
+int main() {
+  /* code */
+
+  int val = 10;
+  quadtree_t *tree = quadtree_new(0, 0, 10, 10);
+  quadtree_insert(tree, 1, 1, &val);
+  quadtree_insert(tree, 2, 2, &val);
+  quadtree_insert(tree, 3, 3, &val);
+
+  printf("tree length: %d\n", tree->length);
+
+  return 0;
+}
+```
 
 ---
 
