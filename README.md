@@ -33,8 +33,6 @@ Hello world:
 #include <quadtree.h>
 
 int main() {
-  /* code */
-
   int val = 10;
   quadtree_t *tree = quadtree_new(0, 0, 10, 10);
   quadtree_insert(tree, 1, 1, &val);
