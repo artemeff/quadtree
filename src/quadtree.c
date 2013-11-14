@@ -1,20 +1,24 @@
 #include "quadtree.h"
 
-/* private prototypes */
-static int
+/*
+** Private prototypes
+*/
+static bool
 split_node_(quadtree_t *tree, node_t *node);
 
-static int
+static bool
 insert_(quadtree_t* tree, node_t *root, point_t *point, void *key);
 
-static int
+static bool
 node_contains_(node_t *outer, point_t *it);
 
 static node_t *
 get_quadrant_(node_t *root, point_t *point);
 
-/* private implementations */
-static int
+/*
+** Private implementations
+*/
+static bool
 node_contains_(node_t *outer, point_t *it) {
   return outer->bounds != NULL
       && outer->bounds->nw->x < it->x
@@ -45,7 +49,7 @@ get_quadrant_(node_t *root, point_t *point) {
 }
 
 
-static int
+static bool
 split_node_(quadtree_t *tree, node_t *node){
   node_t *nw;
   node_t *ne;
@@ -92,33 +96,41 @@ find_(node_t* node, double x, double y) {
   return NULL;
 }
 
-// cribbed from the google closure library.
-static int
+static bool
 insert_(quadtree_t* tree, node_t *root, point_t *point, void *key) {
   if(node_isempty(root)) {
     root->point = point;
     root->key   = key;
-    return 1;
+    return true;
   } else if(node_isleaf(root)){
     if(root->point->x == point->x && root->point->y == point->y){
       reset_node_(tree, root);
       root->point = point;
       root->key   = key;
-      return 0;
+      return false;
     } else {
-      if(!split_node_(tree, root)) return 0;
+      if(!split_node_(tree, root)) return false;
       return insert_(tree, root, point, key);
     }
-    return 1;
+    return true;
   } else if(node_ispointer(root)){
     node_t* quadrant = get_quadrant_(root, point);
     return quadrant == NULL ? 0 : insert_(tree, quadrant, point, key);
   }
-  return 0;
+  return false;
 }
 
 
-/* public */
+/*
+** Public functions
+*/
+
+/**
+ * Create new tree and return pointer
+ *
+ * quadtree_new(double min_x, min_y, max_x, max_y)
+ * @return *tree
+ */
 quadtree_t*
 quadtree_new(double minx, double miny, double maxx, double maxy) {
   quadtree_t *tree;
@@ -132,21 +144,39 @@ quadtree_new(double minx, double miny, double maxx, double maxy) {
   return tree;
 }
 
-int
+/**
+ * Insert point to the tree
+ *
+ * quadtree_insert(quadtree_t *tree, double x, y, void *key)
+ * @return bool
+ */
+bool
 quadtree_insert(quadtree_t *tree, double x, double y, void *key) {
   point_t *point;
-  if(!(point = point_new(x, y))) return 0;
-  if(!node_contains_(tree->root, point)) return 0;
-  if(!insert_(tree, tree->root, point, key)) return 0;
+  if(!(point = point_new(x, y))) return false;
+  if(!node_contains_(tree->root, point)) return false;
+  if(!insert_(tree, tree->root, point, key)) return false;
   tree->length++;
-  return 1;
+  return true;
 }
 
+/**
+ * Search if tree has point
+ *
+ * quadtree_search(quadtree_t *tree, double x, y)
+ * @return *point
+ */
 point_t*
 quadtree_search(quadtree_t *tree, double x, double y) {
   return find_(tree->root, x, y);
 }
 
+/**
+ * Destroy tree
+ *
+ * quadtree_free(quadtree_t *tree)
+ * @return void
+ */
 void
 quadtree_free(quadtree_t *tree) {
   if(tree->key_free != NULL) {
@@ -157,6 +187,13 @@ quadtree_free(quadtree_t *tree) {
   free(tree);
 }
 
+/**
+ * Walks in tree, works like each for points
+ *
+ *                             void ascent        void descent
+ * quadtree_walk(node_t *root, fun(node_t *node), fun(node_t *node))
+ * @return void
+ */
 void
 quadtree_walk(node_t *root, void (*descent)(node_t *node),
                             void (*ascent)(node_t *node)) {

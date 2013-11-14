@@ -2,6 +2,7 @@
 #define __QUADTREE_H__
 
 #include <stdlib.h>
+#include <stdbool.h>
 #include <math.h>
 
 typedef unsigned int uint;
@@ -13,8 +14,8 @@ typedef struct point {
 typedef struct bounds {
   point_t *nw;
   point_t *se;
-  double width;
-  double height;
+  double   width;
+  double   height;
 } bounds_t;
 
 typedef struct node {
@@ -22,9 +23,9 @@ typedef struct node {
   struct node *nw;
   struct node *se;
   struct node *sw;
-  bounds_t *bounds;
-  point_t  *point;
-  void *key;
+  bounds_t    *bounds;
+  point_t     *point;
+  void        *key;
 } node_t;
 
 typedef struct quadtree {
@@ -49,9 +50,9 @@ node_t*     node_with_bounds(double minx, double miny, double maxx, double maxy)
 quadtree_t* quadtree_new(double minx, double miny, double maxx, double maxy);
 void        quadtree_free(quadtree_t *tree);
 point_t*    quadtree_search(quadtree_t *tree, double x, double y);
-int         quadtree_insert(quadtree_t *tree, double x, double y, void *key);
+bool        quadtree_insert(quadtree_t *tree, double x, double y, void *key);
 void        quadtree_walk(node_t *root,
-                 void (*descent)(node_t *node),
-                 void (*ascent)(node_t *node));
+                          void (*descent)(node_t *node),
+                          void (*ascent)(node_t *node));
 
 #endif
