@@ -5,11 +5,17 @@
 ### Benchmarks
 
 ```
-[ok] 0.1095 of 0.120000
-     insert_100000_times
+[ok] 0.1114s of 0.120000s
+     fill_small_tree
 
-[ok] 0.0096 of 0.010000
-     walking_in_tree_with_100000_points
+[ok] 0.0097s of 0.010000s
+     walking_in_small_tree
+
+[ok] 0.0103s of 0.015000s
+     finds_0_0_200_200_in_small_tree_walk
+     
+[ok] 0.0032s of 0.004000s
+     finds_0_0_200_200_in_small_tree_within
 ```
 
 ---
