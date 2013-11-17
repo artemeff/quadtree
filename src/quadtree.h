@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#define RESULTS_SET_DEFAULT_ALLOCATION 100000000
 
 typedef unsigned int uint;
 
@@ -34,12 +35,19 @@ typedef struct quadtree {
   uint    length;
 } quadtree_t;
 
+typedef struct results {
+  point_t *points[RESULTS_SET_DEFAULT_ALLOCATION];
+  int      index;
+  bool     full;
+} results_t;
 
 point_t*    point_new(double x, double y);
 void        point_free(point_t *point);
 bounds_t*   bounds_new();
+bounds_t*   bounds_create(double x1, double y1, double x2, double y2);
 void        bounds_extend(bounds_t *bounds, double x, double y);
 void        bounds_free(bounds_t *bounds);
+bool        bounds_intersect(bounds_t *bbox, node_t *node);
 node_t*     node_new();
 void        node_free(node_t *node, void (*value_free)(void*));
 int         node_ispointer(node_t *node);
@@ -51,6 +59,7 @@ quadtree_t* quadtree_new(double minx, double miny, double maxx, double maxy);
 void        quadtree_free(quadtree_t *tree);
 point_t*    quadtree_search(quadtree_t *tree, double x, double y);
 bool        quadtree_insert(quadtree_t *tree, double x, double y, void *key);
+void        quadtree_within(node_t *tree, bounds_t *bounds, results_t *results);
 void        quadtree_walk(node_t *root,
                           void (*descent)(node_t *node),
                           void (*ascent)(node_t *node));
