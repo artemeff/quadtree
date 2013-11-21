@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
-#define RESULTS_SET_DEFAULT_ALLOCATION 100000000
 
 typedef unsigned int uint;
 
@@ -37,7 +36,7 @@ typedef struct quadtree {
 
 typedef struct result_node {
   struct result_node *next;
-  point_t              *point;
+  point_t            *point;
 } result_node_t;
 
 typedef void (*within_callback_t)(point_t *point);

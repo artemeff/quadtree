@@ -16,17 +16,9 @@ void fill_tree_100000() {
   stop();
 }
 
-void ascent(node_t *node) {
-  if (node && node->point) {
-    // ok
-  }
-}
+void ascent(node_t *node) {}
 
-void descent(node_t *node) {
-  if (node && node->point) {
-    // ok
-  }
-}
+void descent(node_t *node) {}
 
 void walking_in_tree_100000() {
   start();
@@ -87,7 +79,7 @@ int main(){
   tree = quadtree_new(0, 0, 1000, 1000);
 
   bench(fill_tree_100000, 0.125);
-  bench(walking_in_tree_100000, 0.011);
+  bench(walking_in_tree_100000, 0.01);
   bench(finds_0_0_200_200_in_tree_100000_walk, 0.011);
   bench(finds_0_0_200_200_in_tree_100000_within, 0.0045);
   bench(finds_0_0_15_15_in_tree_100000_within, 0.0005);

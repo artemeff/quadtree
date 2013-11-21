@@ -3,6 +3,7 @@
 
 void test_node() {
   node_t *node = node_new();
+  
   assert(!node_isleaf(node));
   assert(node_isempty(node));
   assert(!node_ispointer(node));
