@@ -213,26 +213,22 @@ quadtree_walk(node_t *root, void (*descent)(node_t *node),
  * quadtree_within(quadtree_t *tree, bbox_t *bbox, results_t *results)
  * @return void
  */
-
-#include <stdio.h>
-
 void
-quadtree_within(node_t *root, bounds_t *bounds, results_t *results) {
+quadtree_within(node_t *root, bounds_t *bounds, within_callback_t cb) {
   if (node_isleaf(root)) {
-    results->points[results->index] = root->point;
-    results->index++;
+    cb(root->point);
   } else {
     if (root->sw && bounds_intersect(bounds, root->sw)) {
-      quadtree_within(root->sw, bounds, results);
+      quadtree_within(root->sw, bounds, cb);
     }
     if (root->se && bounds_intersect(bounds, root->se)) {
-      quadtree_within(root->se, bounds, results);
+      quadtree_within(root->se, bounds, cb);
     }
     if (root->nw && bounds_intersect(bounds, root->nw)) {
-      quadtree_within(root->nw, bounds, results);
+      quadtree_within(root->nw, bounds, cb);
     }
     if (root->ne && bounds_intersect(bounds, root->ne)) {
-      quadtree_within(root->ne, bounds, results);
+      quadtree_within(root->ne, bounds, cb);
     }
   }
 }

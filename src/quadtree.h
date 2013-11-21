@@ -35,11 +35,12 @@ typedef struct quadtree {
   uint    length;
 } quadtree_t;
 
-typedef struct results {
-  point_t *points[RESULTS_SET_DEFAULT_ALLOCATION];
-  int      index;
-  bool     full;
-} results_t;
+typedef struct result_node {
+  struct result_node *next;
+  point_t              *point;
+} result_node_t;
+
+typedef void (*within_callback_t)(point_t *point);
 
 point_t*    point_new(double x, double y);
 void        point_free(point_t *point);
@@ -59,7 +60,7 @@ quadtree_t* quadtree_new(double minx, double miny, double maxx, double maxy);
 void        quadtree_free(quadtree_t *tree);
 point_t*    quadtree_search(quadtree_t *tree, double x, double y);
 bool        quadtree_insert(quadtree_t *tree, double x, double y, void *key);
-void        quadtree_within(node_t *tree, bounds_t *bounds, results_t *results);
+void        quadtree_within(node_t *tree, bounds_t *bounds, within_callback_t cb);
 void        quadtree_walk(node_t *root,
                           void (*descent)(node_t *node),
                           void (*ascent)(node_t *node));

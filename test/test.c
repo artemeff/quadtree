@@ -33,8 +33,8 @@ void test_bounds() {
   assert(bbox->nw->y == 0.0);
   assert(bbox->se->x == 10.0);
   assert(bbox->se->y == 14.0);
-  assert(bbox->width == 9.0)
-  assert(bbox->height == 14.0)
+  assert(bbox->width == 9.0);
+  assert(bbox->height == 14.0);
 
   bounds_free(bounds);
 }
@@ -109,25 +109,30 @@ void test_points() {
   point_free(point);
 }
 
+result_node_t *head, *cur;
+
+void within_cb(point_t *point) {
+  cur = (result_node_t *)malloc(sizeof(result_node_t));
+  cur->point = point;
+  cur->next  = head;
+  head = cur;
+}
+
 void test_within() {
   int i, val = 10;
-  quadtree_t *tree    = quadtree_new(0, 0, 100, 100);
-  bounds_t   *bbox    = bounds_create(25.0, 25.0, 35.0, 35.0);
-  results_t  *results = (results_t *)malloc(sizeof(results_t));
-  results->index = 0;
-  results->full = false;
+  quadtree_t *tree = quadtree_new(0, 0, 100, 100);
+  bounds_t   *bbox = bounds_create(25.0, 25.0, 35.0, 35.0);
 
   for (i = 1; i <= 30; i++) {
     quadtree_insert(tree, (double) i, (double) i, &val);
   }
 
-  quadtree_within(tree->root, bbox, results);
+  quadtree_within(tree->root, bbox, within_cb);
 
-  assert(results->points[0]->x == 26);
-  assert(results->points[1]->x == 27);
-  assert(results->points[2]->x == 28);
-  assert(results->points[3]->x == 29);
-  assert(results->points[4]->x == 30);
+  assert(cur->point->x == 30);
+
+  cur = cur->next->next->next->next;
+  assert(cur->point->x == 26);
 
   quadtree_free(tree);
 }
