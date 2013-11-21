@@ -60,18 +60,10 @@ Finds in tree:
 result_node_t *head, *cur;
 
 void within_cb(point_t *point) {
-  cur = (result_node_t *)malloc(sizeof(result_node_t));
-  cur->point = point;
-  cur->next  = head;
-  head = cur;
+  printf("%d\n", point->x);
 }
 
 quadtree_within(tree->root, bbox, within_cb);
-
-while(curr) {
-  printf("%d\n", curr->val);
-  curr = curr->next;
-}
 ```
 
 Walks in tree:
@@ -79,13 +71,13 @@ Walks in tree:
 ```c
 void ascent(node_t *node) {
   if (node && node->point) {
-    asc_size++;
+    printf("%d\n", node->point->x);
   }
 }
 
 void descent(node_t *node) {
   if (node && node->point) {
-    desc_size++;
+    printf("%d\n", node->point->x);
   }
 }
 
