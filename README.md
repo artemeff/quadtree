@@ -54,6 +54,73 @@ int main() {
 }
 ```
 
+Finds in tree:
+
+```c
+result_node_t *head, *cur;
+
+void within_cb(point_t *point) {
+  cur = (result_node_t *)malloc(sizeof(result_node_t));
+  cur->point = point;
+  cur->next  = head;
+  head = cur;
+}
+
+quadtree_within(tree->root, bbox, within_cb);
+
+while(curr) {
+  printf("%d\n", curr->val);
+  curr = curr->next;
+}
+```
+
+Walks in tree:
+
+```c
+void ascent(node_t *node) {
+  if (node && node->point) {
+    asc_size++;
+  }
+}
+
+void descent(node_t *node) {
+  if (node && node->point) {
+    desc_size++;
+  }
+}
+
+quadtree_walk(tree->root, &ascent, &descent);
+```
+
+Reference:
+
+```c
+// Create new tree and return pointer
+quadtree_t *
+quadtree_new(double minx, double miny, double maxx, double maxy)
+
+// Insert point to the tree
+bool
+quadtree_insert(quadtree_t *tree, double x, double y, void *key)
+
+// Search if tree has point
+point_t *
+quadtree_search(quadtree_t *tree, double x, double y)
+
+// Destroy tree
+void
+quadtree_free(quadtree_t *tree)
+
+// Walks in tree, works like each for points
+void
+quadtree_walk(node_t *root, void (*descent)(node_t *node),
+                            void (*ascent)(node_t *node))
+
+// Find points in bbox
+void
+quadtree_within(node_t *root, bounds_t *bounds, within_callback_t cb)
+```
+
 ---
 
 ### Contributing
