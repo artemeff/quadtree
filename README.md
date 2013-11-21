@@ -5,17 +5,20 @@
 ### Benchmarks
 
 ```
-[ok] 0.1114s of 0.120000s
-     fill_small_tree
+[ok] 0.1126s of 0.1250s
+     fill_tree_100000
 
-[ok] 0.0097s of 0.010000s
-     walking_in_small_tree
+[ok] 0.0100s of 0.0110s
+     walking_in_tree_100000
 
-[ok] 0.0103s of 0.015000s
-     finds_0_0_200_200_in_small_tree_walk
+[ok] 0.0109s of 0.0110s
+     finds_0_0_200_200_in_tree_100000_walk
      
-[ok] 0.0032s of 0.004000s
-     finds_0_0_200_200_in_small_tree_within
+[ok] 0.0042s of 0.0045s
+     finds_0_0_200_200_in_tree_100000_within
+
+[ok] 0.0003s of 0.0005s
+     finds_0_0_15_15_in_tree_100000_within
 ```
 
 ---
