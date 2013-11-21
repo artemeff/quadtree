@@ -26,7 +26,7 @@ void b_measure(const char *descr, double expect, void (*bm)()) {
     fail = 1;
   }
 
-  printf("\t%.4fs of %fs\n", duration, expect);
+  printf("\t%.4fs of %.4fs\n", duration, expect);
   printf("\x1b[30m\t%s\x1b[0m\n", descr);
 }
 
