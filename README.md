@@ -5,20 +5,16 @@
 ### Benchmarks
 
 ```
-[ok] 0.1126s of 0.1250s
-     fill_tree_100000
-
-[ok] 0.0100s of 0.0110s
-     walking_in_tree_100000
-
-[ok] 0.0109s of 0.0110s
-     finds_0_0_200_200_in_tree_100000_walk
-     
-[ok] 0.0042s of 0.0045s
-     finds_0_0_200_200_in_tree_100000_within
-
-[ok] 0.0003s of 0.0005s
-     finds_0_0_15_15_in_tree_100000_within
+0.1157s  fill_tree_100k
+0.0068s  walking_in_tree_100k
+0.0103s  finds_0_0_200_200_in_tree_100k_walk
+0.0042s  finds_0_0_200_200_in_tree_100k_within
+0.0003s  finds_0_0_15_15_in_tree_100k_within
+10.4059s fill_tree_10m
+0.0502s  walking_in_tree_10m
+0.0857s  finds_0_0_200_200_in_tree_10m_walk
+0.0362s  finds_0_0_200_200_in_tree_10m_within
+0.0028s  finds_0_0_15_15_in_tree_10m_within
 ```
 
 ---

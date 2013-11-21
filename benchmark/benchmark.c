@@ -1,9 +1,9 @@
 #include "benchmark.h"
 #include "../src/quadtree.h"
 
-static quadtree_t *tree;
+static quadtree_t *tree100k, *tree10m;
 
-void fill_tree_100000() {
+void fill_tree_100k() {
   int times = 100000, val = 10;
   double x, y;
 
@@ -11,7 +11,20 @@ void fill_tree_100000() {
   while(times--){
     x = (double) (rand() % 1000);
     y = (double) (rand() % 1000);
-    quadtree_insert(tree, x, y, &val);
+    quadtree_insert(tree100k, x, y, &val);
+  }
+  stop();
+}
+
+void fill_tree_10m() {
+  int times = 10000000, val = 10;
+  double x, y;
+
+  start();
+  while(times--){
+    x = (double) (rand() % 1000);
+    y = (double) (rand() % 1000);
+    quadtree_insert(tree10m, x, y, &val);
   }
   stop();
 }
@@ -20,9 +33,15 @@ void ascent(node_t *node) {}
 
 void descent(node_t *node) {}
 
-void walking_in_tree_100000() {
+void walking_in_tree_100k() {
   start();
-  quadtree_walk(tree->root, &ascent, &descent);
+  quadtree_walk(tree100k->root, &ascent, &descent);
+  stop();
+}
+
+void walking_in_tree_10m() {
+  start();
+  quadtree_walk(tree10m->root, &ascent, &descent);
   stop();
 }
 
@@ -40,11 +59,19 @@ void ascent_find(node_t *node) {
   }
 }
 
-void finds_0_0_200_200_in_tree_100000_walk() {
+void finds_0_0_200_200_in_tree_100k_walk() {
   node_asc = (result_node_t *)malloc(sizeof(result_node_t));
 
   start();
-  quadtree_walk(tree->root, &ascent_find, &descent);
+  quadtree_walk(tree100k->root, &ascent_find, &descent);
+  stop();
+}
+
+void finds_0_0_200_200_in_tree_10m_walk() {
+  node_asc = (result_node_t *)malloc(sizeof(result_node_t));
+
+  start();
+  quadtree_walk(tree10m->root, &ascent_find, &descent);
   stop();
 }
 
@@ -57,33 +84,56 @@ void within_cb(point_t *point) {
   head = cur;
 }
 
-void finds_0_0_200_200_in_tree_100000_within() {
+void finds_0_0_200_200_in_tree_100k_within() {
   bounds_t *bbox = bounds_create(0.0, 0.0, 200.0, 200.0);
 
   start();
-  quadtree_within(tree->root, bbox, within_cb);
+  quadtree_within(tree100k->root, bbox, within_cb);
   stop();
 }
 
-void finds_0_0_15_15_in_tree_100000_within() {
+void finds_0_0_200_200_in_tree_10m_within() {
+  bounds_t *bbox = bounds_create(0.0, 0.0, 200.0, 200.0);
+
+  start();
+  quadtree_within(tree10m->root, bbox, within_cb);
+  stop();
+}
+
+void finds_0_0_15_15_in_tree_100k_within() {
   bounds_t *bbox = bounds_create(0.0, 0.0, 15.0, 15.0);
 
   start();
-  quadtree_within(tree->root, bbox, within_cb);
+  quadtree_within(tree100k->root, bbox, within_cb);
+  stop();
+}
+
+void finds_0_0_15_15_in_tree_10m_within() {
+  bounds_t *bbox = bounds_create(0.0, 0.0, 15.0, 15.0);
+
+  start();
+  quadtree_within(tree10m->root, bbox, within_cb);
   stop();
 }
 
 int main(){
   b_desc();
   srand(time(NULL));
-  tree = quadtree_new(0, 0, 1000, 1000);
+  tree100k = quadtree_new(0, 0, 1000, 1000);
+  tree10m  = quadtree_new(0, 0, 1000, 1000);
 
-  bench(fill_tree_100000, 0.125);
-  bench(walking_in_tree_100000, 0.01);
-  bench(finds_0_0_200_200_in_tree_100000_walk, 0.011);
-  bench(finds_0_0_200_200_in_tree_100000_within, 0.0045);
-  bench(finds_0_0_15_15_in_tree_100000_within, 0.0005);
+  bench(fill_tree_100k);
+  bench(walking_in_tree_100k);
+  bench(finds_0_0_200_200_in_tree_100k_walk);
+  bench(finds_0_0_200_200_in_tree_100k_within);
+  bench(finds_0_0_15_15_in_tree_100k_within);
 
-  quadtree_free(tree);
+  bench(fill_tree_10m);
+  bench(walking_in_tree_10m);
+  bench(finds_0_0_200_200_in_tree_10m_walk);
+  bench(finds_0_0_200_200_in_tree_10m_within);
+  bench(finds_0_0_15_15_in_tree_10m_within);
+
+  quadtree_free(tree100k);
   return b_isok();
 }
