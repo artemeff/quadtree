@@ -8,7 +8,7 @@ void fill_tree_100k() {
   double x, y;
 
   start();
-  while(times--){
+  while(times--) {
     x = (double) (rand() % 1000);
     y = (double) (rand() % 1000);
     quadtree_insert(tree100k, x, y, &val);
@@ -21,7 +21,7 @@ void fill_tree_10m() {
   double x, y;
 
   start();
-  while(times--){
+  while(times--) {
     x = (double) (rand() % 1000);
     y = (double) (rand() % 1000);
     quadtree_insert(tree10m, x, y, &val);
@@ -60,7 +60,7 @@ void ascent_find(node_t *node) {
 }
 
 void finds_0_0_200_200_in_tree_100k_walk() {
-  node_asc = (result_node_t *)malloc(sizeof(result_node_t));
+  node_asc = malloc(sizeof(result_node_t));
 
   start();
   quadtree_walk(tree100k->root, &ascent_find, &descent);
@@ -68,7 +68,7 @@ void finds_0_0_200_200_in_tree_100k_walk() {
 }
 
 void finds_0_0_200_200_in_tree_10m_walk() {
-  node_asc = (result_node_t *)malloc(sizeof(result_node_t));
+  node_asc = malloc(sizeof(result_node_t));
 
   start();
   quadtree_walk(tree10m->root, &ascent_find, &descent);
@@ -78,7 +78,7 @@ void finds_0_0_200_200_in_tree_10m_walk() {
 result_node_t *head, *cur;
 
 void within_cb(point_t *point) {
-  cur = (result_node_t *)malloc(sizeof(result_node_t));
+  cur = malloc(sizeof(result_node_t));
   cur->point = point;
   cur->next  = head;
   head = cur;

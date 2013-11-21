@@ -3,8 +3,9 @@
 point_t *
 point_new(double x, double y) {
   point_t* point;
-  if(!(point = malloc(sizeof(*point))))
+  if (!(point = malloc(sizeof(*point)))) {
     return NULL;
+  }
   point->x = x;
   point->y = y;
   return point;

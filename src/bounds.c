@@ -20,8 +20,9 @@ bounds_free(bounds_t *bounds) {
 bounds_t*
 bounds_new() {
   bounds_t *bounds;
-  if((bounds = malloc(sizeof(*bounds))) == NULL)
+  if ((bounds = malloc(sizeof(*bounds))) == NULL) {
     return NULL;
+  }
   bounds->nw     = point_new(INFINITY, -INFINITY);
   bounds->se     = point_new(-INFINITY, INFINITY);
   bounds->width  = 0;
@@ -32,8 +33,9 @@ bounds_new() {
 bounds_t*
 bounds_create(double x1, double y1, double x2, double y2) {
   bounds_t *bounds;
-  if((bounds = malloc(sizeof(*bounds))) == NULL)
+  if ((bounds = malloc(sizeof(*bounds))) == NULL) {
     return NULL;
+  }
   bounds->nw     = point_new(x1, y1);
   bounds->se     = point_new(x2, y2);
   bounds->width  = fabs(bounds->nw->x - bounds->se->x);
@@ -48,14 +50,10 @@ bounds_intersect(bounds_t *bbox, node_t *node) {
   double d3 = node->bounds->se->x - node->bounds->nw->x;
   double d4 = bbox->nw->x - node->bounds->se->x;
 
-  if (d1 < 0)
-    d1 += 360;
-  if (d2 < 0)
-    d2 += 360;
-  if (d3 < 0)
-    d3 += 360;
-  if (d4 < 0)
-    d4 += 360;
+  if (d1 < 0) d1 += 360;
+  if (d2 < 0) d2 += 360;
+  if (d3 < 0) d3 += 360;
+  if (d4 < 0) d4 += 360;
 
   return ((d1 + d2 + d3 + d4) != 360);
 }

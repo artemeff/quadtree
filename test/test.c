@@ -3,7 +3,7 @@
 
 void test_node() {
   node_t *node = node_new();
-  
+
   assert(!node_isleaf(node));
   assert(node_isempty(node));
   assert(!node_ispointer(node));
@@ -113,7 +113,7 @@ void test_points() {
 result_node_t *head, *cur;
 
 void within_cb(point_t *point) {
-  cur = (result_node_t *)malloc(sizeof(result_node_t));
+  cur = malloc(sizeof(result_node_t));
   cur->point = point;
   cur->next  = head;
   head = cur;
