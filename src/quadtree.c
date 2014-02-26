@@ -105,6 +105,7 @@ insert_(quadtree_t* tree, node_t *root, point_t *point, bool update) {
       if(update) {
         reset_node_(tree, root);
         root->point = point;
+        point = NULL;
         return root->point;
       } else {
         return root->point;
@@ -144,7 +145,7 @@ quadtree_new(double minx, double miny, double maxx, double maxy) {
 }
 
 /**
- * Insert point to the tree
+ * Insert point to the tree and return point pointer
  *
  * quadtree_insert(quadtree_t *tree, double x, double y, void *key, bool update)
  * @return *point
@@ -160,7 +161,8 @@ quadtree_insert(quadtree_t *tree, double x, double y, void *key, bool update) {
   }
   point_return = insert_(tree, tree->root, point, update);
   if(point_return != point) {
-    point_free(point, tree->key_free);
+    if(point)
+      point_free(point, tree->key_free);
     return point_return;
   }
   tree->length++;
@@ -168,7 +170,7 @@ quadtree_insert(quadtree_t *tree, double x, double y, void *key, bool update) {
 }
 
 /**
- * Search if tree has point
+ * Search if tree has point and return point pointer
  *
  * quadtree_search(quadtree_t *tree, double x, y)
  * @return *point
