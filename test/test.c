@@ -62,7 +62,7 @@ void test_walking() {
   quadtree_t *tree = quadtree_new(0, 0, 100, 100);
 
   for (i = 1; i < 30; i++) {
-    quadtree_insert(tree, (double) i, (double) i, &val);
+    quadtree_insert(tree, (double) i, (double) i, &i, false);
   }
 
   quadtree_walk(tree->root, &ascent, &descent);
@@ -83,31 +83,33 @@ void test_tree() {
   assert(tree->root->bounds->se->y == 1);
 
 
-  assert(quadtree_insert(tree, 0, 0, &val) == 0);
-  assert(quadtree_insert(tree, 10, 10, &val) == 0);
-  assert(quadtree_insert(tree, 110.0, 110.0, &val) == 0);
+  assert(quadtree_insert(tree, 0, 0, &val, false) == 0);
+  assert(quadtree_insert(tree, 10, 10, &val, false) == 0);
+  assert(quadtree_insert(tree, 110.0, 110.0, &val, false) == 0);
 
-  assert(quadtree_insert(tree, 8.0, 2.0, &val) != 0);
+  assert(quadtree_insert(tree, 8.0, 2.0, &val, false) != 0);
   assert(tree->length == 1);
   assert(tree->root->point->x == 8.0);
   assert(tree->root->point->y == 2.0);
 
-  assert(quadtree_insert(tree, 2.0, 3.0, &val) != 0);
-  assert(quadtree_insert(tree, 2.0, 3.0, &val) == 0);
+  assert(quadtree_insert(tree, 2.0, 3.0, &val, false) != 0);
+  // assert(quadtree_insert(tree, 2.0, 3.0, &val, false) == 0);
   assert(tree->length == 2);
   assert(tree->root->point == NULL);
 
-  assert(quadtree_insert(tree, 3.0, 1.1, &val) == 1);
+  assert(quadtree_insert(tree, 3.0, 1.1, &val, false) != 0);
   assert(tree->length == 3);
   assert(quadtree_search(tree, 3.0, 1.1)->x == 3.0);
   quadtree_free(tree);
 }
 
 void test_points() {
-  point_t *point = point_new(5, 6);
+  int val = 10;
+  point_t *point = point_new(5, 6, &val);
   assert(point->x == 5);
   assert(point->y == 6);
-  point_free(point);
+  assert(point->key == &val);
+  point_free(point, NULL);
 }
 
 result_node_t *head, *cur;
@@ -125,7 +127,7 @@ void test_within() {
   bounds_t   *bbox = bounds_create(25.0, 25.0, 35.0, 35.0);
 
   for (i = 1; i <= 30; i++) {
-    quadtree_insert(tree, (double) i, (double) i, &val);
+    quadtree_insert(tree, (double) i, (double) i, &val, false);
   }
 
   quadtree_within(tree->root, bbox, within_cb);
@@ -139,11 +141,12 @@ void test_within() {
 }
 
 int main() {
+
   case(test_points);
   case(test_node);
   case(test_bounds);
-  case(test_walking);
   case(test_tree);
+  case(test_walking);
   case(test_within);
 
   return t_isok();

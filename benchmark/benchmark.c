@@ -4,27 +4,27 @@
 static quadtree_t *tree100k, *tree10m;
 
 void fill_tree_100k() {
-  int times = 100000, val = 10;
+  int times = 100000;
   double x, y;
 
   start();
   while(times--) {
     x = (double) (rand() % 1000);
     y = (double) (rand() % 1000);
-    quadtree_insert(tree100k, x, y, &val);
+    quadtree_insert(tree100k, x, y, &times, true);
   }
   stop();
 }
 
 void fill_tree_10m() {
-  int times = 10000000, val = 10;
+  int times = 10000000;
   double x, y;
 
   start();
   while(times--) {
     x = (double) (rand() % 1000);
     y = (double) (rand() % 1000);
-    quadtree_insert(tree10m, x, y, &val);
+    quadtree_insert(tree10m, x, y, &times, true);
   }
   stop();
 }

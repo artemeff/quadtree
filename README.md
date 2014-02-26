@@ -40,9 +40,9 @@ Hello world:
 int main() {
   int val = 10;
   quadtree_t *tree = quadtree_new(0, 0, 10, 10);
-  quadtree_insert(tree, 1, 1, &val);
-  quadtree_insert(tree, 2, 2, &val);
-  quadtree_insert(tree, 3, 3, &val);
+  quadtree_insert(tree, 1, 1, 1, &val);
+  quadtree_insert(tree, 2, 2, 2, &val);
+  quadtree_insert(tree, 3, 3, 3, &val);
 
   printf("tree length: %d\n", tree->length);
 
@@ -89,7 +89,7 @@ quadtree_new(double minx, double miny, double maxx, double maxy)
 
 // Insert point to the tree
 bool
-quadtree_insert(quadtree_t *tree, double x, double y, void *key)
+quadtree_insert(quadtree_t *tree, double x, double y, int id, void *key)
 
 // Search if tree has point
 point_t *

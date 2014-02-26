@@ -19,7 +19,7 @@ void b_desc() {
 void b_measure(const char *descr, void (*bm)()) {
   bm();
 
-  printf("%.4fs \x1b[30m%s\x1b[0m\n", duration, descr);
+  printf("%.4fs \x1b[0m%s\x1b[0m\n", duration, descr);
 }
 
 int b_isok() {
