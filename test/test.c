@@ -100,6 +100,8 @@ void test_tree() {
   assert(quadtree_insert(tree, 3.0, 1.1, &val, false) != 0);
   assert(tree->length == 3);
   assert(quadtree_search(tree, 3.0, 1.1)->x == 3.0);
+  assert(quadtree_insert(tree, 3.0, 1.1, &val, false) != 0);
+  assert(tree->length == 3);
   quadtree_free(tree);
 }
 
