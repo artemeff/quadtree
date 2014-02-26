@@ -58,7 +58,7 @@ void descent(node_t *node) {
 }
 
 void test_walking() {
-  int i, val = 10;
+  int i;
   quadtree_t *tree = quadtree_new(0, 0, 100, 100);
 
   for (i = 1; i < 30; i++) {
@@ -122,12 +122,12 @@ void within_cb(point_t *point) {
 }
 
 void test_within() {
-  int i, val = 10;
+  int i;
   quadtree_t *tree = quadtree_new(0, 0, 100, 100);
   bounds_t   *bbox = bounds_create(25.0, 25.0, 35.0, 35.0);
 
   for (i = 1; i <= 30; i++) {
-    quadtree_insert(tree, (double) i, (double) i, &val, false);
+    quadtree_insert(tree, (double) i, (double) i, &i, false);
   }
 
   quadtree_within(tree->root, bbox, within_cb);

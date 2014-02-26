@@ -27,7 +27,6 @@ void
 node_reset(node_t* node, void (*key_free)(void*)) {
   if(node->point)
     point_free(node->point, key_free);
-  //(*key_free)(node->key);
 }
 
 node_t *
@@ -42,7 +41,6 @@ node_new() {
   node->sw     = NULL;
   node->point  = NULL;
   node->bounds = NULL;
-  // node->key    = NULL;
   return node;
 }
 

@@ -7,7 +7,7 @@ bool
 split_node_(quadtree_t *tree, node_t *node);
 
 point_t*
-insert_(quadtree_t* tree, node_t *root, point_t *point/*, void *key*/, bool update);
+insert_(quadtree_t* tree, node_t *root, point_t *point, bool update);
 
 bool
 node_contains_(node_t *outer, point_t *it);
@@ -98,17 +98,15 @@ find_(node_t* node, double x, double y) {
 }
 
 point_t*
-insert_(quadtree_t* tree, node_t *root, point_t *point, /*void *key, */bool update) {
+insert_(quadtree_t* tree, node_t *root, point_t *point, bool update) {
   if (node_isempty(root)) {
     root->point = point;
-    // root->key   = key;
     return point;
   } else if (node_isleaf(root)) {
     if (root->point->x == point->x && root->point->y == point->y) {
       if(update) {
         reset_node_(tree, root);
         root->point = point;
-        // root->key   = key;
         return point;
       } else {
         point_free(point, NULL);
@@ -167,7 +165,6 @@ quadtree_new(double minx, double miny, double maxx, double maxy) {
 point_t*
 quadtree_insert(quadtree_t *tree, double x, double y, void *key, bool update) {
   point_t *point;
-  point_t *point_return;
   if(!(point = point_new(x, y, key))) return NULL;
   if(!node_contains_(tree->root, point)) return NULL;
   if(!insert_(tree, tree->root, point, update)) return NULL;

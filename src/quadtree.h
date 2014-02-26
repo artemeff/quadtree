@@ -27,7 +27,6 @@ typedef struct node {
   struct node *sw;
   bounds_t    *bounds;
   point_t     *point;
-  //void        *key;
 } node_t;
 
 typedef struct quadtree {
