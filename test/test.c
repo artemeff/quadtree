@@ -83,25 +83,27 @@ void test_tree() {
   assert(tree->root->bounds->se->y == 1);
 
 
-  assert(quadtree_insert(tree, 0, 0, &val, false) == 0);
-  assert(quadtree_insert(tree, 10, 10, &val, false) == 0);
-  assert(quadtree_insert(tree, 110.0, 110.0, &val, false) == 0);
+  assert(quadtree_insert(tree, 0, 0, &val, false) == NULL);
+  assert(quadtree_insert(tree, 10, 10, &val, false) == NULL);
+  assert(quadtree_insert(tree, 110.0, 110.0, &val, false) == NULL);
 
-  assert(quadtree_insert(tree, 8.0, 2.0, &val, false) != 0);
+  assert(quadtree_insert(tree, 8.0, 2.0, &val, false) != NULL);
   assert(tree->length == 1);
   assert(tree->root->point->x == 8.0);
   assert(tree->root->point->y == 2.0);
 
-  assert(quadtree_insert(tree, 2.0, 3.0, &val, false) != 0);
-  // assert(quadtree_insert(tree, 2.0, 3.0, &val, false) == 0);
+  assert(quadtree_insert(tree, 2.0, 3.0, &val, false) != NULL);
   assert(tree->length == 2);
   assert(tree->root->point == NULL);
 
-  assert(quadtree_insert(tree, 3.0, 1.1, &val, false) != 0);
+  assert(quadtree_insert(tree, 3.0, 1.1, &val, false) != NULL);
   assert(tree->length == 3);
   assert(quadtree_search(tree, 3.0, 1.1)->x == 3.0);
-  assert(quadtree_insert(tree, 3.0, 1.1, &val, false) != 0);
+  assert(quadtree_insert(tree, 3.0, 1.1, &val, false) != NULL);
   assert(tree->length == 3);
+  // there is a bug
+  // assert(quadtree_insert(tree, 3.0, 1.1, &val, true) != NULL);
+  // assert(tree->length == 3);
   quadtree_free(tree);
 }
 
