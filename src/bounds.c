@@ -12,8 +12,8 @@ bounds_extend(bounds_t *bounds, double x, double y){
 
 void
 bounds_free(bounds_t *bounds) {
-  point_free(bounds->nw);
-  point_free(bounds->se);
+  point_free(bounds->nw, NULL);
+  point_free(bounds->se, NULL);
   free(bounds);
 }
 
@@ -23,8 +23,8 @@ bounds_new() {
   if ((bounds = malloc(sizeof(*bounds))) == NULL) {
     return NULL;
   }
-  bounds->nw     = point_new(INFINITY, -INFINITY);
-  bounds->se     = point_new(-INFINITY, INFINITY);
+  bounds->nw     = point_new(INFINITY, -INFINITY, NULL);
+  bounds->se     = point_new(-INFINITY, INFINITY, NULL);
   bounds->width  = 0;
   bounds->height = 0;
   return bounds;
@@ -36,8 +36,8 @@ bounds_create(double x1, double y1, double x2, double y2) {
   if ((bounds = malloc(sizeof(*bounds))) == NULL) {
     return NULL;
   }
-  bounds->nw     = point_new(x1, y1);
-  bounds->se     = point_new(x2, y2);
+  bounds->nw     = point_new(x1, y1, NULL);
+  bounds->se     = point_new(x2, y2, NULL);
   bounds->width  = fabs(bounds->nw->x - bounds->se->x);
   bounds->height = fabs(bounds->nw->y - bounds->se->y);
   return bounds;

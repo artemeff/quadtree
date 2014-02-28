@@ -25,8 +25,8 @@ node_isleaf(node_t *node){
 
 void
 node_reset(node_t* node, void (*key_free)(void*)) {
-  point_free(node->point);
-  (*key_free)(node->key);
+  if(node->point)
+    point_free(node->point, key_free);
 }
 
 node_t *
@@ -41,7 +41,6 @@ node_new() {
   node->sw     = NULL;
   node->point  = NULL;
   node->bounds = NULL;
-  node->key    = NULL;
   return node;
 }
 

@@ -2,36 +2,17 @@
 
 ---
 
-### Benchmarks
-
-```
-0.1157s  fill_tree_100k
-0.0068s  walking_in_tree_100k
-0.0103s  finds_0_0_200_200_in_tree_100k_walk
-0.0042s  finds_0_0_200_200_in_tree_100k_within
-0.0003s  finds_0_0_15_15_in_tree_100k_within
-10.4059s fill_tree_10m
-0.0502s  walking_in_tree_10m
-0.0857s  finds_0_0_200_200_in_tree_10m_walk
-0.0362s  finds_0_0_200_200_in_tree_10m_within
-0.0028s  finds_0_0_15_15_in_tree_10m_within
-```
-
----
-
 ### Installation
 
 ```bash
 $ git clone && cd
-$ make test
+$ make
 $ make install
 ```
 
 ---
 
 ### Usage
-
-Hello world:
 
 ```c
 #include <stdio.h>
@@ -40,9 +21,9 @@ Hello world:
 int main() {
   int val = 10;
   quadtree_t *tree = quadtree_new(0, 0, 10, 10);
-  quadtree_insert(tree, 1, 1, &val);
-  quadtree_insert(tree, 2, 2, &val);
-  quadtree_insert(tree, 3, 3, &val);
+  quadtree_insert(tree, 1, 1, 1, &val);
+  quadtree_insert(tree, 2, 2, 2, &val);
+  quadtree_insert(tree, 3, 3, 3, &val);
 
   printf("tree length: %d\n", tree->length);
 
@@ -55,11 +36,11 @@ Finds in tree:
 ```c
 result_node_t *head, *cur;
 
-void within_cb(point_t *point) {
+void within_callback(point_t *point) {
   printf("%d\n", point->x);
 }
 
-quadtree_within(tree->root, bbox, within_cb);
+quadtree_within(tree->root, bbox, within_callback);
 ```
 
 Walks in tree:
@@ -87,11 +68,11 @@ Reference:
 quadtree_t *
 quadtree_new(double minx, double miny, double maxx, double maxy)
 
-// Insert point to the tree
-bool
-quadtree_insert(quadtree_t *tree, double x, double y, void *key)
+// Insert point to the tree and return point pointer
+point_t *
+quadtree_insert(quadtree_t *tree, double x, double y, void *key, bool update)
 
-// Search if tree has point
+// Search if tree has point and return point pointer
 point_t *
 quadtree_search(quadtree_t *tree, double x, double y)
 
